@@ -29,7 +29,7 @@ jobs:
 
       - run:
           name: Assemble APKs
-          command: ./gradlew assembleAndroidTest assemble
+          command: ./gradlew assemble assembleAndroidTest
       - run:
           name: Dump Google Cloud Credentials to file
           command: echo ${GOOGLE_AUTH} > ${HOME}/gcp-key.json
@@ -38,7 +38,7 @@ jobs:
       - run:
           name: Configure environment
           command: |
-            echo 'export APK_PATH=`find . -path "*.apk" ! -path "*unaligned.apk" ! -path "*Test*.apk" -print -quit`' >> $BASH_ENV
+            echo 'export APK_PATH=`find . -path "*debug*.apk" ! -path "*unaligned.apk" ! -path "*Test*.apk" -print -quit`' >> $BASH_ENV
             echo 'export TEST_APK_PATH=`find "." "-path" "*Test*.apk" -print -quit`' >> $BASH_ENV
       - run:
           name: Run UI Tests
