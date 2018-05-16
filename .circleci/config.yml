@@ -1,4 +1,5 @@
 version: 2.0
+
 defaults: &defaults
   docker:
     - image: circleci/android:api-27-alpha
@@ -8,6 +9,9 @@ defaults: &defaults
   environment:
     JVM_OPTS: -Xmx3200m
     TERM: dumb
+
+workspace_root: &workspace_root
+    /tmp/workspace
 
 jobs:
     prepare_proj:
@@ -21,27 +25,51 @@ jobs:
             - v1-dependencies-
 
         - run: ./gradlew dependencies
+        - run:
+            name: Move project to workspace
+            command: |
+              mkdir -p /tmp/workspace/project
+              mv ./* /tmp/workspace/project/
 
         - save_cache:
             paths:
               - ~/.gradle
             key: v1-dependencies-{{ checksum "build.gradle" }}
 
+        - persist_to_workspace:
+            root: *workspace_root
+            path: project/
+
     unit_test:
       <<: *defaults
       steps:
-        - run: ./gradlew test
+        - attach_workspace:
+            at: *workspace_root
+        - run: cd /tmp/project && ./gradlew test
 
     assemble_apks:
       <<: *defaults
       steps:
+        - attach_workspace:
+            at: *workspace_root
         - run:
             name: Assemble APKs
-            command: ./gradlew assembleAndroidTest assemble
+            command: cd /tmp/project && ./gradlew assembleAndroidTest assemble
+        - run:
+            name: Persist APKs
+            command: |
+              mkdir -p /tmp/workspace/apk
+              find /tmp/project/ -name \*.apk -exec cp {} /tmp/workspace/apk/ \;
+        - persist_to_workspace:
+            root: *workspace_root
+            path: artifacts/
+
 
     ui_test:
       <<: *defaults
       steps:
+        - attach_workspace:
+            at: *workspace_root
         - run:
             name: Dump Google Cloud Credentials to file
             command: echo ${GOOGLE_AUTH} > ${HOME}/gcp-key.json
