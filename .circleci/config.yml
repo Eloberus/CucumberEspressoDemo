@@ -63,15 +63,15 @@ workflows:
     jobs:
       - prepare_proj
       - unit_test:
-        requires:
-          - prepare_proj
+          requires:
+            - prepare_proj
       - assemble_apks:
-        requires:
-          - prepare_proj
+          requires:
+            - prepare_proj
       - ui_test:
-        requires:
-          - assemble_apks
-        filters:
-          branches:
-            only: master
+          requires:
+            - assemble_apks
+          filters:
+            branches:
+              only: master
 
