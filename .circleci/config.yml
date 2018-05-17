@@ -35,7 +35,8 @@ jobs:
             paths:
               - ~/tmp/workspace/gradle
             key: v1-dependencies-{{ checksum "/tmp/workspace/project/build.gradle" }}
-
+        - run: ls -la /tmp/workspace
+        - run: ls -la /tmp/workspace/project
         - persist_to_workspace:
             root: *workspace_root
             path: project/*
