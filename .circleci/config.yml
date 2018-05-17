@@ -17,6 +17,8 @@ jobs:
     prepare_proj:
       <<: *defaults
       steps:
+        - attach_workspace:
+            at: /tmp/workspace/
         - checkout
 
         - restore_cache:
