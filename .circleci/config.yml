@@ -38,8 +38,8 @@ jobs:
         - run: ls -la /tmp/workspace
         - run: ls -la /tmp/workspace/project
         - persist_to_workspace:
-            root: *workspace_root
-            path: project/*
+            root: /tmp/workspace/project
+            path: *
 
     unit_test:
       <<: *defaults
