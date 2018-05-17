@@ -33,12 +33,12 @@ jobs:
 
         - save_cache:
             paths:
-              - ~/.gradle
-            key: v1-dependencies-{{ checksum "build.gradle" }}
+              - ~/tmp/workspace/gradle
+            key: v1-dependencies-{{ checksum "/tmp/workspace/project/build.gradle" }}
 
         - persist_to_workspace:
             root: *workspace_root
-            path: project/
+            path: project/*
 
     unit_test:
       <<: *defaults
