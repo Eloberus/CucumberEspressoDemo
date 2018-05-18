@@ -11,7 +11,7 @@ before_install:
 
 
 # gcloud login
-  - echo ${GOOGLE_AUTH} > ${HOME}/gcp-key.json
+  - echo ${GOOGLE_AUTH} | base64 --decode > ${HOME}/gcp-key.json
   - ./google-cloud-sdk/bin/gcloud auth activate-service-account --key-file ${HOME}/gcp-key.json
   - ./google-cloud-sdk/bin/gcloud --quiet config set project ${PROJECT_ID}
 # install dependencies
