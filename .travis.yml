@@ -4,6 +4,10 @@ android:
     - build-tools-27.0.3
     - android-26
 
+branches:
+  only:
+    - master
+
 #emulator dependencies
     - android-22
     - sys-img-armeabi-v7a-android-22
