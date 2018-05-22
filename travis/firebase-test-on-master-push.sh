@@ -1,5 +1,5 @@
 #!/bin/bash
-if [ "${ghToken:-false}" != "false" ]; then
+if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
     gc_sdk_url=$(curl -s "https://cloud.google.com/sdk/downloads?hl=de" | grep -o "https.*google-cloud-sdk.*linux.*x86_64.*\\.tar\\.gz" | sed s/\\?.*//g)
     ${gc_sdk_url} | tar xvz
 

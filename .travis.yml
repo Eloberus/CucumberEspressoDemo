@@ -7,6 +7,10 @@ android:
     - android-22
     - sys-img-armeabi-v7a-android-22
 
+branches:
+  only:
+    - master
+
 before_install:
   - ./gradlew dependencies
 
