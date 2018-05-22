@@ -3,14 +3,13 @@ android:
   components:
     - build-tools-27.0.3
     - android-26
+#emulator dependencies
+    - android-22
+    - sys-img-armeabi-v7a-android-22
 
 branches:
   only:
     - master
-
-#emulator dependencies
-    - android-22
-    - sys-img-armeabi-v7a-android-22
 
 before_install:
   - ./gradlew dependencies
