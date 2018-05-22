@@ -9,5 +9,5 @@ if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
     ./gradlew assembleAndroidTest assemble
     APK_PATH=$(find . -path "*.apk" ! -path "*unaligned.apk" ! -path "*Test*.apk" -print -quit)
     TEST_APK_PATH=$(find "." "-path" "*Test*.apk" -print -quit)
-    ./google-cloud-sdk/bin/gcloud firebase test android run --type instrumentation --app ${APK_PATH} --test ${TEST_APK_PATH} --device model=sailfish,version=27,locale=en,orientation=portrait --timeout 30m
+    ./google-cloud-sdk/bin/gcloud firebase test android run --type instrumentation --app ${APK_PATH} --test ${TEST_APK_PATH} --device model=Nexus6P,version=27,locale=en,orientation=portrait --timeout 30m
 fi
