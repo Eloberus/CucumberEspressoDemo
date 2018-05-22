@@ -1,7 +1,7 @@
 #!/bin/bash
 if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
     gc_sdk_url=$(curl -s "https://cloud.google.com/sdk/downloads?hl=de" | grep -o "https.*google-cloud-sdk.*linux.*x86_64.*\\.tar\\.gz" | sed s/\\?.*//g)
-    ${gc_sdk_url} | tar xvz
+    wget -qO- ${gc_sdk_url} | tar xvz
 
     echo ${GOOGLE_AUTH} | base64 --decode > ${HOME}/gcp-key.json
     ./travis/google-cloud-sdk/bin/gcloud auth activate-service-account --key-file ${HOME}/gcp-key.json
